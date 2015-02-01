@@ -1,7 +1,7 @@
-RunSanta.MainMenu = function (game) {
+Blobb.MainMenu = function (game) {
 };
 
-RunSanta.MainMenu.prototype = {
+Blobb.MainMenu.prototype = {
 
 	create: function () {
 

@@ -1,6 +1,6 @@
-RunSanta.Preloader = function(game) {};
+Blobb.Preloader = function(game) {};
 
-RunSanta.Preloader.prototype = {
+Blobb.Preloader.prototype = {
 
     preload: function() {
         this.parcel = this.load.image('snow', 'images/snow.png');

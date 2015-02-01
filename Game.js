@@ -1,8 +1,8 @@
-RunSanta.Game = function(game) {
+Blobb.Game = function(game) {
 
 };
 
-RunSanta.Game.prototype = {
+Blobb.Game.prototype = {
 	create: function() {
 		this.game.stage.backgroundColor = '#000000';
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -27,7 +27,9 @@ RunSanta.Game.prototype = {
 		this.diameterMin = 25;
 		this.diameterMax = 50;
 
-		this.input.onDown.add(this.burstCircle, this);
+		this.input.onDown.add(function(pointer) {
+			this.burstCircle(pointer, this.passedSeconds);
+		}.bind(this));
 	},
 
 	createBubblesPool: function(num) {
@@ -58,7 +60,7 @@ RunSanta.Game.prototype = {
 		} else if (this.passedSeconds > 20 && this.passedSeconds < 30) {
 			numBubbles = 5;
 			minSpeed = 100;
-			maxSpeed = 200;
+			maxSpeed = 150;
 			timeToSpawn = 800;
 			this.diameterMin = 20;
 			this.diameterMax = 35;
@@ -100,19 +102,20 @@ RunSanta.Game.prototype = {
 	},
 
 	collisionHandler: function(snow, bubble) {
-		this.destroyBubble(bubble);
+		this.destroyBubble(bubble, snow.name);
 	},
 
 	quitGame: function(pointer) {
 		this.state.start('MainMenu');
 	},
 
-	destroyBubble: function(bubble) {
-		this.burstCircle(bubble);
+	destroyBubble: function(bubble, origin) {
+		this.burstCircle(bubble, origin);
 		bubble.kill();
 	},
 
-	burstCircle: function(bubble, pointer) {
+	burstCircle: function(bubble, origin) {
+		origin = origin || null;
 		var particles = this.add.group(),
 			startX = bubble.x,
 			startY = bubble.y,
@@ -130,6 +133,7 @@ RunSanta.Game.prototype = {
 				x: xsp,
 				y: ysp
 			};
+			particle.name = origin + "";
 		}
 
 		this.blobbs.add(particles);
@@ -140,6 +144,7 @@ RunSanta.Game.prototype = {
 		}, this);
 
 	},
+
 	render: function() {
 		/* this.game.debug.body(this.planes[0].getSprite());
 		this.game.debug.body(this.planes[1].getSprite());

@@ -1,10 +1,10 @@
-var RunSanta = {};
+var Blobb = {};
 
-RunSanta.Boot = function (game) {
+Blobb.Boot = function (game) {
 
 };
 
-RunSanta.Boot.prototype = {
+Blobb.Boot.prototype = {
 
     init: function () {
         this.input.maxPointers = 1;

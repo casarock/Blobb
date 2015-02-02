@@ -4,7 +4,7 @@ Blobb.Game = function(game) {
 
 Blobb.Game.prototype = {
 	create: function() {
-		this.game.stage.backgroundColor = '#000000';
+		this.game.stage.backgroundColor = '#ffffff';
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
 		this.blobbs = this.add.group();
@@ -23,7 +23,6 @@ Blobb.Game.prototype = {
 		this.timer.start();
 
 		this.passedSeconds = 0;
-
 		this.diameterMin = 25;
 		this.diameterMax = 50;
 
@@ -51,7 +50,6 @@ Blobb.Game.prototype = {
 			minSpeed = 50;
 			maxSpeed = 100;
 			timeToSpawn = 800;
-
 		} else if (this.passedSeconds > 10 && this.passedSeconds < 20) {
 			numBubbles = 5;
 			minSpeed = 50;
@@ -85,13 +83,28 @@ Blobb.Game.prototype = {
 			var bubble = this.bubbles.getFirstDead();
 			if (bubble === null || bubble === undefined) return;
 
+			var bubbleX = 20 + Math.random() * 300,
+				tweenX = this.rnd.integerInRange(8, 16),
+				tweenSpeed = this.rnd.integerInRange(350, 500);
+
 			bubble.revive();
 			bubble.checkWorldBounds = true;
 			bubble.outOfBoundsKill = true;
-			bubble.reset(20 + Math.random() * 300, -10);
-			bubble.scale.set(0.12);
+			bubble.reset(bubbleX, -32);
+			bubble.scale.set(0.25);
 			bubble.anchor.set(0.5);
 			bubble.body.velocity.y = this.rnd.integerInRange(minSpeed, maxSpeed);
+			
+			this.add.tween(bubble.position)
+				.to(
+					{ x: bubbleX + tweenX },
+					tweenSpeed,
+					Phaser.Easing.Quadratic.InOut,
+					true,
+					0,
+					1000,
+					true
+				);
 		}
 	},
 

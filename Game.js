@@ -4,6 +4,8 @@ Blobb.Game = function(game) {
 
 Blobb.Game.prototype = {
 	create: function() {
+		this.score = 0;
+		this.gameIsOver = false;
 		this.game.stage.backgroundColor = '#ffffff';
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -26,6 +28,11 @@ Blobb.Game.prototype = {
 		this.diameterMin = 25;
 		this.diameterMax = 50;
 
+		this.scoreText = this.game.add.bitmapText(16, 16,
+			'kenneyfont', 'Score: '  + this.score);
+
+		this.scoreText.scale.setTo(0.75, 0.75);
+
 		this.input.onDown.add(function(pointer) {
 			this.burstCircle(pointer, this.passedSeconds);
 		}.bind(this));
@@ -39,33 +46,41 @@ Blobb.Game.prototype = {
 	},
 
 	spawnBubble: function() {
+		if (this.gameIsOver) return;
 		var numBubbles = 1,
 			minSpeed = 25,
 			maxSpeed = 50,
 			timeToSpawn = 1000;
 
 		this.passedSeconds++;
-		if (this.passedSeconds > 5 && this.passedSeconds < 10) {
+		var levels = {
+			"one": this.passedSeconds > 30 && this.passedSeconds < 60,
+			"two": this.passedSeconds >= 60 && this.passedSeconds < 75,
+			"three": this.passedSeconds >= 75 && this.passedSeconds < 90,
+			"four": this.passedSeconds >= 90
+		};
+
+		if (levels.one) {
 			numBubbles = 3;
 			minSpeed = 50;
 			maxSpeed = 100;
 			timeToSpawn = 800;
-		} else if (this.passedSeconds > 10 && this.passedSeconds < 20) {
+		} else if (levels.two) {
 			numBubbles = 5;
 			minSpeed = 50;
 			maxSpeed = 150;
 			timeToSpawn = 600;
-		} else if (this.passedSeconds > 20 && this.passedSeconds < 30) {
+		} else if (levels.three) {
 			numBubbles = 5;
 			minSpeed = 100;
 			maxSpeed = 150;
 			timeToSpawn = 800;
 			this.diameterMin = 20;
 			this.diameterMax = 35;
-		} else if (this.passedSeconds > 30) {
+		} else if (levels.four) {
 			numBubbles = 5;
-			minSpeed = 150;
-			maxSpeed = 250;
+			minSpeed = 100;
+			maxSpeed = 200;
 			timeToSpawn = 1000;
 			this.diameterMin = 20;
 			this.diameterMax = 25;
@@ -88,13 +103,11 @@ Blobb.Game.prototype = {
 				tweenSpeed = this.rnd.integerInRange(350, 500);
 
 			bubble.revive();
-			bubble.checkWorldBounds = true;
-			bubble.outOfBoundsKill = true;
 			bubble.reset(bubbleX, -32);
 			bubble.scale.set(0.25);
 			bubble.anchor.set(0.5);
 			bubble.body.velocity.y = this.rnd.integerInRange(minSpeed, maxSpeed);
-			
+
 			this.add.tween(bubble.position)
 				.to(
 					{ x: bubbleX + tweenX },
@@ -109,13 +122,28 @@ Blobb.Game.prototype = {
 	},
 
 	update: function() {
-		this.blobbs.forEachAlive(function(particleGroup) {
-			this.game.physics.arcade.overlap(particleGroup, this.bubbles, this.collisionHandler, null, this);
-		}, this);
+
+		if (!this.gameIsOver) {
+			this.blobbs.forEachAlive(function(particleGroup) {
+				this.game.physics.arcade.overlap(particleGroup, this.bubbles, this.collisionHandler, null, this);
+			}, this);
+
+			this.bubbles.forEachAlive(function(bubble) {
+				if (bubble.position.y > this.world.height + 16) {
+					this.gameIsOver = true;
+					this.gameOver();
+				}
+			}, this);
+		}
+
 	},
 
 	collisionHandler: function(snow, bubble) {
 		this.destroyBubble(bubble, snow.name);
+	},
+
+	gameOver: function() {
+		this.bubbles.callAll('kill');
 	},
 
 	quitGame: function(pointer) {
@@ -125,6 +153,8 @@ Blobb.Game.prototype = {
 	destroyBubble: function(bubble, origin) {
 		this.burstCircle(bubble, origin);
 		bubble.kill();
+		this.score++;
+		this.scoreText.setText('Score: '  + this.score);
 	},
 
 	burstCircle: function(bubble, origin) {

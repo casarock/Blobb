@@ -9,9 +9,15 @@
 	<script src="MainMenu.js"></script>
 	<script src="Game.js"></script>
     <style>
-        body {
+		@font-face {
+			font-family: 'kenneyspace';
+			src: url('fonts/kenvector_future_thin.ttf');
+		}
+
+		body {
             margin: 0;
             padding: 0;
+			background-color: #fff;
         }
     </style>
 </head>
@@ -22,7 +28,7 @@
 window.onload = function() {
 	//	100% of the browser window - see Boot.js for additional configuration
 	var gameMode = Phaser.Device.cocoonJS ? Phaser.CANVAS : Phaser.AUTO;
-	
+
 	var game = new Phaser.Game(320, 480, Phaser.CANVAS, '');
 
 	//	Add the States your game has.

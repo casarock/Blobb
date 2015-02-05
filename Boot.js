@@ -28,7 +28,7 @@ Blobb.Boot.prototype = {
     },
 
     preload: function () {
-
+        this.load.image('appsbude', 'images/appsbude-logo.jpg');
     },
 
     create: function () {

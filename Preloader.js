@@ -5,10 +5,13 @@ Blobb.Preloader = function(game) {
 Blobb.Preloader.prototype = {
 
     preload: function() {
+
+        var fileFormat = (this.game.device.cocoonJS) ? '.json' : '.xml';
+
         this.snow = this.load.image('snow', 'images/snow-new.png');
         this.bubble = this.load.image('bubble', 'images/bubble-new.png');
         this.logo = this.load.image('logo', 'images/logo.png');
-        this.load.bitmapFont('kenneyfont', 'fonts/kenneyspace_72/kenneyspace_72.png', 'fonts/kenneyspace_72/kenneyspace_72.fnt');
+        this.load.bitmapFont('kenneyfont', 'fonts/kenneyspace_72/kenneyspace_72.png', 'fonts/kenneyspace_72/kenneyspace_72' + fileFormat);
     },
 
     create: function() {

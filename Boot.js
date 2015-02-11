@@ -18,12 +18,15 @@ Blobb.Boot.prototype = {
         this.scale.pageAlignVertically = true;
 
         if (this.game.device.desktop) {
+            console.log("I'm desktop");
             this.scale.maxWidth = this.game.width;
             this.scale.maxHeight = this.game.height;
         } else {
+            console.log("I'm mobile");
             this.scale.maxWidth = this.game.width * 2.5;
             this.scale.maxHeight = this.game.height * 2.5;
             this.scale.forceOrientation(false, true);
+            this.scale.setScreenSize(true);
         }
     },
 

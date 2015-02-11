@@ -17,6 +17,8 @@
 			background-color: #fff;
         }
     </style>
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 </head>
 <body>
 
@@ -86,8 +88,9 @@
 
 	//	100% of the browser window - see Boot.js for additional configuration
 	var gameMode = Phaser.Device.cocoonJS ? Phaser.CANVAS : Phaser.AUTO;
-
-	var game = new Phaser.Game(320, 480, Phaser.CANVAS, '');
+	var SAFE_ZONE_WIDTH = 320;
+	var SAFE_ZONE_HEIGHT = 480;
+	var game = new Phaser.Game(SAFE_ZONE_WIDTH, SAFE_ZONE_HEIGHT, Phaser.CANVAS, '');
 
 	//	Add the States your game has.
 	game.state.add('Boot', Blobb.Boot);

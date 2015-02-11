@@ -12,7 +12,7 @@ Blobb.MainMenu.prototype = {
 		this.diameterMax = 50;
 
 		for (var i = 0; i < 10; i++) {
-			var b = this.bubbles.create(32 + Math.random() * 420, -10, 'bubble');
+			var b = this.bubbles.create(32 + Math.random() * this.game.width - 32, -10, 'bubble');
 			b.kill();
 		}
 
@@ -57,8 +57,8 @@ Blobb.MainMenu.prototype = {
 		var bubble = this.bubbles.getFirstDead();
 		if (bubble === null || bubble === undefined) return;
 
-		var bubbleX = this.rnd.integerInRange(20, 300),
-			bubbleY = this.rnd.integerInRange(20, 460);
+		var bubbleX = this.rnd.integerInRange(32, this.game.width - 32),
+			bubbleY = this.rnd.integerInRange(32, this.game.height - 32);
 
 		bubble.revive();
 		bubble.reset(bubbleX, bubbleY);

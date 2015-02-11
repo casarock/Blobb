@@ -98,7 +98,7 @@ Blobb.Game.prototype = {
 			var bubble = this.bubbles.getFirstDead();
 			if (bubble === null || bubble === undefined) return;
 
-			var bubbleX = 20 + Math.random() * 300,
+			var bubbleX = this.rnd.integerInRange(32, this.game.width - 32),
 				tweenX = this.rnd.integerInRange(8, 16),
 				tweenSpeed = this.rnd.integerInRange(350, 500);
 

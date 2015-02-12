@@ -116,7 +116,6 @@ Blobb.MainMenu.prototype = {
 	},
 
 	banner: function() {
-		console.log("banner");
 		Cocoon.Ad.banner.on("ready", function(w, h) {
 			console.log("banner ready");
 			Cocoon.Ad.setBannerLayout(Cocoon.Ad.BannerLayout.BOTTOM_CENTER);

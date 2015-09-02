@@ -20,7 +20,7 @@
 	<meta name="viewport"
 		content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 </head>
-<body>
+<body style="background-color: #333;">
 
 <script type="text/javascript">
 
@@ -88,8 +88,8 @@
 
 	//	100% of the browser window - see Boot.js for additional configuration
 	var gameMode = Phaser.Device.cocoonJS ? Phaser.CANVAS : Phaser.AUTO;
-	var SAFE_ZONE_WIDTH = window.innerWidth;// * window.devicePixelRatio;
-	var SAFE_ZONE_HEIGHT = window.innerHeight;// * window.devicePixelRatio;
+	var SAFE_ZONE_WIDTH = 640;// * window.devicePixelRatio;
+	var SAFE_ZONE_HEIGHT = 900;// * window.devicePixelRatio;
 	var game = new Phaser.Game(SAFE_ZONE_WIDTH, SAFE_ZONE_HEIGHT, Phaser.CANVAS, '');
 
 	//	Add the States your game has.

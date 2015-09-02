@@ -135,6 +135,9 @@ Blobb.Game.prototype = {
 				}
 			}, this);
 		}
+		else {
+			this.quitGame();
+		}
 
 	},
 

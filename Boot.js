@@ -18,7 +18,7 @@ Blobb.Boot.prototype = {
         this.scale.pageAlignVertically = true;
 
         if (this.game.device.desktop) {
-            console.log("I'm desktop");
+            console.log("I'm desktop", this.game.width, this.game.height);
             this.scale.maxWidth = this.game.width;
             this.scale.maxHeight = this.game.height;
         } else {
